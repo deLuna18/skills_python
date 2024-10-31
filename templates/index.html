@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie-edge">
+    <link rel="stylesheet" href="../static/w3.css">
+    <title>Skills `24</title>
+</head>
+<body>
+    <div class="w3-bar w3-blue w3-padding w3-container">
+        <h3>SKILLS 2024</h3>
+    </div>
+    <div class="w3-row-padding w3-margin">
+        <div class="w3-half">
+            <div class="w3-container w3-padding w3-round-xlarge w3-card-4">
+                <form id="bookForm" method="POST">
+                    <p>
+                        <label>ISBN</label>
+                        <input type="text" name="isbn" class="w3-input">
+                    </p>
+                    <p>
+                        <label>TITLE</label>
+                        <input type="text" name="title" class="w3-input">
+                    </p>
+                    <p>
+                        <label>AUTHOR</label>
+                        <input type="text" name="author" class="w3-input">
+                    </p>
+                    <p>
+                        <label>COPYRIGHT</label>
+                        <input type="text" name="copyright" class="w3-input">
+                    </p>
+                    <p>
+                        <label>EDITION</label>
+                        <input type="text" name="edition" class="w3-input">
+                    </p>
+                    <p>
+                        <label>PRICE</label>
+                        <input type="text" name="price" class="w3-input">
+                    </p>
+                    <p>
+                        <label>QTY</label>
+                        <input type="text" name="qty" class="w3-input">
+                    </p>
+                </form>
+            </div>
+        </div>
+		
+        <div class="w3-half w3-margin-bottom">
+            <table class="w3-table">
+                <tr>
+                    <td><button onclick="setFormAction('add')" class="w3-button w3-blue w3-input">ADD</button></td>
+                    <td><button onclick="setFormAction('find')" class="w3-button w3-blue w3-input">FIND</button></td>
+                </tr>
+                <tr>
+                    <td><button onclick="setFormAction('delete')" class="w3-button w3-blue w3-input">DELETE</button></td>
+                    <td><button onclick="setFormAction('update')" class="w3-button w3-blue w3-input">UPDATE</button></td>
+                </tr>
+            </table>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="w3-panel w3-amber w3-padding w3-center">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+		
+		<div class="w3-container w3-padding w3-margin-top">
+            <table class="w3-table-all w3-bordered w3-striped w3-hoverable">
+                <thead>
+                    <tr class="w3-blue">
+                        <th>ISBN</th>
+                        <th>TITLE</th>
+                        <th>AUTHOR</th>
+                        <th>COPYRIGHT</th>
+                        <th>EDITION</th>
+                        <th>PRICE</th>
+                        <th>QTY</th>
+                        <th>TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                        <tr>
+                            <td>{{ book[0] }}</td>
+                            <td>{{ book[1] }}</td>
+                            <td>{{ book[2] }}</td>
+                            <td>{{ book[3] }}</td>
+                            <td>{{ book[4] }}</td>
+                            <td>{{ book[5] }}</td>
+                            <td>{{ book[6] }}</td>
+                            <td>{{ "%.02f"|format(book[7]) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<script>
+    function setFormAction(action) {
+        const form = document.getElementById('bookForm');
+        switch(action) {
+			case 'add':
+                form.action = '/addbook';
+                break;
+            case 'find':
+                form.action = '/findbook';
+				break;
+            case 'delete':
+				form.action = '/deletebook';
+                break;
+            case 'update':
+                form.action = '/updatebook';
+                break;
+        }
+            form.submit();
+    }
+</script>
+</html>
